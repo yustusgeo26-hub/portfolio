@@ -1,20 +1,27 @@
-# Yustus Geofrey — Personal Portfolio
+# Yustus Geofrey — Streamlit Portfolio
 
-Dark futuristic portfolio built with Next.js, Tailwind CSS and Supabase Auth/PostgreSQL. Includes public published-project cards and a private admin area for project management.
+A Python-first dark portfolio with Streamlit, Supabase Auth, PostgreSQL and Storage.
 
-## Setup
-1. Install Node.js 20+ and run `npm install`.
-2. Copy `.env.example` to `.env.local`, then set your Supabase project URL, anon/publishable key and owner email.
-3. Run `supabase/schema.sql` in Supabase Dashboard > SQL Editor.
-4. Create the owner user manually in Supabase Authentication > Users using the same email as `ADMIN_EMAIL`.
-5. Copy that user's UUID into the owner RLS policy in `supabase/schema.sql`, replacing the all-zero UUID, and rerun the policy section. Do not deploy admin editing until this is done.
-6. Run `npm run dev`; visit `http://localhost:3000` and `/admin/login`.
+## Local setup (Windows)
+1. Install Python 3.11 or newer.
+2. In the repository folder, run:
+   ```bat
+   py -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+3. Copy .streamlit/secrets.toml.example to .streamlit/secrets.toml and enter your Supabase URL, anon/publishable key, and admin email.
+4. Create the owner account manually in Supabase Authentication > Users. Disable public signups if you do not need them.
+5. Copy the owner's UUID from Supabase Auth. Replace both all-zero UUID placeholders in supabase/schema.sql with that UUID.
+6. Run supabase/schema.sql in Supabase SQL Editor.
+7. Start with `streamlit run app.py` and open the local URL, usually http://localhost:8501. Use the sidebar to switch to Admin.
 
-## Admin
-Sign in at `/admin/login`. Create, edit, delete, save drafts and publish projects. Supported categories: Data Analytics, Data Science, Dashboards & BI, Web Development, Full-Stack & APIs, Automation & Software Tools, Game Development. Published projects appear on the public homepage. Slugs must be unique.
+## Free deployment
+Push this repository to GitHub, create a Streamlit Community Cloud app at https://share.streamlit.io/, select app.py, then add the same three settings under App settings > Secrets. Supabase hosts the database, auth and screenshots. Check current free-plan quotas and policies before deploying.
 
-## Screenshots
-Upload images to the `project-screenshots` bucket from Supabase Storage, copy the public URL and paste it into the screenshot field. Bucket uploads are not public; only viewing screenshots is public. Upload policies are intentionally not opened to anonymous users.
-
-## Deploy on Vercel
-Import the GitHub repository, set `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, and `ADMIN_EMAIL` in Vercel environment variables, then deploy. Never commit `.env.local` or expose a Supabase service-role key. Verify owner RLS policy before enabling production admin editing.
+## Security
+- Never commit .streamlit/secrets.toml or expose the Supabase service-role key.
+- Use only the anon/publishable key in this app.
+- Replace the placeholder UUID in the SQL policies before production. PostgreSQL row-level security protects project changes and screenshot uploads; the app's email check is an additional gate.
+- The screenshot bucket is public for image display, but uploads/updates/deletes are restricted to the configured owner UUID.
+- Drafts are not visible publicly; only published records are shown.
