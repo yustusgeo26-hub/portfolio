@@ -196,6 +196,20 @@ def main():
             st.write("Publish your real analytics work, dashboards, websites, tools and games from the admin dashboard.")
             st.markdown(" ".join(f'<span class="pill">{x}</span>' for x in CATEGORIES),unsafe_allow_html=True)
     st.divider()
+    st.markdown('<div class="eyebrow">SOFTWARE DOWNLOADS</div><h2>Get my desktop apps<span class="lime">.</span></h2>',unsafe_allow_html=True)
+    st.caption("Downloadable Windows applications will appear here as releases become available.")
+    with st.container(border=True):
+        app_left, app_right = st.columns([4, 1])
+        with app_left:
+            st.markdown("### 🌱 YusPlant")
+            st.write("A Windows desktop application by Yustus Geofrey.")
+            st.caption("Windows 10 / 11 · Release coming soon")
+        with app_right:
+            st.write("")
+            st.button("⬇ Coming Soon", key="yusplant_download_soon", disabled=True, use_container_width=True)
+    st.markdown("")
+
+    st.divider()
     st.markdown('<div class="eyebrow">CAPABILITIES</div><h2>What I work on<span class="lime">.</span></h2>',unsafe_allow_html=True)
     cols=st.columns(4)
     for col,(tag,title,desc) in zip(cols,[("01 / DATA","Analytics & data science","Cleaning, exploration, statistics and decision support."),("02 / BUILD","Web & full-stack","Websites, applications, APIs and integrations."),("03 / SYSTEMS","Automation & BI","Reporting workflows, dashboards and time-saving tools."),("04 / PLAY","Game development","Gameplay systems, prototypes and interactive experiences.")]):
