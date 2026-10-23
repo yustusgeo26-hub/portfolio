@@ -197,16 +197,20 @@ def main():
             st.markdown(" ".join(f'<span class="pill">{x}</span>' for x in CATEGORIES),unsafe_allow_html=True)
     st.divider()
     st.markdown('<div class="eyebrow">SOFTWARE DOWNLOADS</div><h2>Get my desktop apps<span class="lime">.</span></h2>',unsafe_allow_html=True)
-    st.caption("Downloadable Windows applications will appear here as releases become available.")
+    st.caption("Download Windows applications built by Yustus Geofrey.")
     with st.container(border=True):
         app_left, app_right = st.columns([4, 1])
         with app_left:
             st.markdown("### 🌱 YusPlant")
             st.write("A Windows desktop application by Yustus Geofrey.")
-            st.caption("Windows 10 / 11 · Release coming soon")
+            st.caption("Windows 10 / 11 · Version 1.0.0")
         with app_right:
             st.write("")
-            st.button("⬇ Coming Soon", key="yusplant_download_soon", disabled=True, use_container_width=True)
+            yusplant_download_url = secret("YUSPLANT_DOWNLOAD_URL")
+            if valid_url(yusplant_download_url):
+                st.link_button("⬇ Download EXE", yusplant_download_url, type="primary", use_container_width=True)
+            else:
+                st.button("⬇ Coming Soon", key="yusplant_download_soon", disabled=True, use_container_width=True)
     st.markdown("")
 
     st.divider()
